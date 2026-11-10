@@ -2,73 +2,66 @@
 
 ## Executive Summary
 
-This project presents a professional, evidence-based passive reconnaissance assessment of `networkwalks.com`, a public-facing website used as the target for a cybersecurity internship exercise. The objective was to evaluate publicly available information and identify the digital footprint of an external target without engaging in intrusive or unauthorized activity.
+This project documents a structured cybersecurity internship exercise focused on ethical footprinting and reconnaissance. The objective was to assess the public digital footprint of `networkwalks.com` using publicly available information and standard reconnaissance techniques, while maintaining a responsible and non-invasive approach.
 
-The assessment incorporated domain analysis, DNS resolution, web technology fingerprinting, HTTP header inspection, WAF detection, and supporting evidence documentation. The findings show that the target is a live and reachable website, uses a WordPress-based architecture, redirects HTTP to HTTPS, and appears to be protected by ModSecurity.
+The investigation included review of WHOIS data, DNS records, HTTP response behavior, technology fingerprinting, and WAF detection. The findings indicate that the target is a live public website, that it redirects HTTP traffic to HTTPS, that it is running on a WordPress-based platform, and that an application-layer protection mechanism (ModSecurity) appears to be in place.
 
-Although the exercise does not constitute a full vulnerability assessment, it demonstrates the value of ethical reconnaissance in understanding a target’s public exposure, operational posture, and security controls. The evidence was captured, documented, and organized in a clear, professional report that reflects sound investigative practice and cybersecurity awareness.
+This repository is designed to demonstrate professional evidence collection and reporting in a cybersecurity context. It highlights how public data can be used to form a credible security profile without exploiting vulnerabilities or conducting unauthorized testing.
 
 ## Project Overview
 
-This repository documents a structured cybersecurity task focused on footprinting and network reconnaissance. The project environment simulates a realistic scenario in which a security analyst is expected to gather and interpret publicly visible information about a target system.
+This repository was created as part of a Week 2 cybersecurity internship task focused on footprinting, reconnaissance, and network scanning fundamentals. It provides a practical demonstration of how ethical security practitioners assess a target’s public exposure by reviewing open-source indicators and technical metadata.
 
-The task is designed to build practical skills in identifying:
-
-- domain registration traits;
-- internet-facing service behavior;
-- DNS and host exposure;
-- web server and framework indicators;
-- security protections such as WAFs;
-- the broader digital footprint of a target.
-
-The repo is intentionally centered on evidence, documentation, and professional reporting rather than exploit development or malicious testing. From a learning perspective, it provides a strong example of how ethical and responsible reconnaissance can support organizational risk awareness and decision-making.
+The project emphasizes a disciplined methodology, careful interpretation of gathered evidence, and professional documentation. The content supports a broader understanding of how digital assets are mapped in the public domain and how cybersecurity teams use reconnaissance to identify risk areas, exposure points, and security posture.
 
 ## Objectives
 
-This project was designed to achieve the following objectives:
+The objectives of this task were to:
 
-1. Identify and characterize a public target domain.
-2. Gather and interpret WHOIS and DNS information.
-3. Analyze HTTP behavior and server responses.
-4. Identify the target’s technology stack and platform indicators.
-5. Detect signs of defensive infrastructure such as a WAF.
-6. Present the findings in a professional, readable, and security-focused format.
+- identify the target domain and public-facing exposure;
+- review WHOIS and DNS data for validation of domain ownership and reachability;
+- inspect HTTP behavior and server responses;
+- identify technologies used by the website;
+- assess whether defensive controls such as a WAF appear to be present;
+- document findings in a clear, evidence-based report.
 
 ## Scope and Methodology
 
-The assessment was intentionally limited to passive reconnaissance methods and public-facing information. No exploitation, credential theft, brute-force activity, or unauthorized penetration testing was carried out.
+This assessment was limited to passive reconnaissance and public information gathering. No exploit attempts, credential harvesting, unauthorized access, or destructive activity were performed.
 
 The methodology followed a standard defensive security workflow:
 
-- Domain and WHOIS review
-- DNS and host resolution analysis
-- HTTP response inspection
-- Web framework and plugin detection
-- WAF identification and interpretation
-- Documentation and reporting of evidence
+1. Domain and WHOIS review
+2. DNS and host resolution analysis
+3. HTTP response and web server inspection
+4. Technology fingerprinting
+5. WAF identification
+6. Documentation and reporting of findings
 
-## Target Profile
+It is important to note that some findings were based on tool-detected indicators rather than confirmed manual verification. These results are therefore best interpreted as evidence-based observations rather than definitive proof of system configuration or vulnerability status.
+
+## Target Summary
 
 - Domain: `networkwalks.com`
 - Assessment date: 2026-11-10
-- Resolved IP address: `192.232.216.135`
-- Observed platform: WordPress-based website
+- Public IP address identified: `192.232.216.135`
+- Observed web platform: WordPress-based website
 - Observed server: Apache
-- Observed transport behavior: HTTP redirection to HTTPS
-- Observed web protection: ModSecurity WAF
+- Observed transport behavior: HTTP to HTTPS redirect
+- Observed security control: ModSecurity WAF
 
 ## Findings and Evidence
 
 ### 1. Domain Registration and WHOIS Analysis
 
-WHOIS data confirmed that the target domain is active and registered through a major registrar. The domain registration record was consistent with a standard business or commercial website, and ownership details were intentionally masked through privacy protection. This is common in public-facing environments and is not inherently suspicious.
+WHOIS data confirmed that the target domain is active and registered through a major registrar. Ownership details were protected through privacy services, which is common in public-facing commercial environments.
 
 Key observations:
 
-- Domain is active and not expired.
-- Registration is managed through a public registrar.
-- Privacy protection is in place for identity masking.
-- Registrant identity was not publicly exposed.
+- The domain is active and registered.
+- Standard registrar and nameserver infrastructure are in use.
+- Registrant data is masked, which is a common privacy-preserving measure.
+- The domain appears to be a legitimate public website rather than a temporary or suspicious host.
 
 ![WHOIS reconnaissance screenshot](./WHOIS_Screenshot.png)
 
@@ -76,14 +69,14 @@ Relevant output: [whois_output.txt](./whois_output.txt)
 
 ### 2. DNS Resolution and Host Discovery
 
-DNS analysis showed that `networkwalks.com` resolves correctly to a public IPv4 address. This confirms that the domain is live and reachable over the internet. A successful A record resolution is a foundational indicator in external reconnaissance because it validates the presence and reachability of a public-facing target.
+DNS resolution showed that `networkwalks.com` resolves successfully to a public IPv4 address. This confirms that the target is live and reachable over the internet.
 
 Key observations:
 
-- Domain resolves successfully.
-- Public IPv4 address identified: `192.232.216.135`.
-- Host is reachable and public.
-- The domain footprint is consistent with a normal public website.
+- The domain resolves successfully.
+- Public IPv4 address: `192.232.216.135`
+- Host is reachable and publicly exposed.
+- The domain has a conventional DNS footprint.
 
 ![NSLOOKUP screenshot](./NSLookup_Screenshot.png)
 
@@ -91,17 +84,17 @@ Key observations:
 
 Relevant output: [nslookup_output.txt](./nslookup_output.txt) and [dnsrecon_output.txt](./dnsrecon_output.txt)
 
-### 3. HTTP Headers and Web Server Behavior
+### 3. HTTP Headers and Server Behavior
 
-HTTP analysis revealed a redirect from HTTP to HTTPS. This indicates that the site enforces encrypted transport on the primary endpoint and is aligned with a standard secure web configuration practice. The HTTP response also exposed Apache as the server banner, which is consistent with a common hosting environment.
+The web server analysis showed that requests to the site redirect from HTTP to HTTPS. The HTTPS endpoint responded successfully, and the server banner identified Apache. This is consistent with a standard configuration for a public-facing website that enforces secure transport.
 
 Key observations:
 
-- HTTP request returned a redirect to HTTPS.
+- HTTP requests redirect to HTTPS.
 - HTTPS endpoint returned a successful response.
-- The server banner indicates Apache.
-- Content type and headers suggest a conventional web application stack.
-- Cookie metadata indicates the presence of plugin or extension-driven functionality.
+- Server banner indicates Apache.
+- The response includes common web headers and plugin-related metadata.
+- The platform shows evidence of normal public web service behavior.
 
 ![Curl headers screenshot](./Curl_Headers_Screenshot.png)
 
@@ -109,36 +102,36 @@ Relevant output: [curl_headers.txt](./curl_headers.txt)
 
 ### 4. Technology Stack Identification
 
-Web fingerprinting identified the site as WordPress-based and surfaced supporting technologies such as Bootstrap and jQuery. The discovery of a CMS and front-end libraries is a major insight because it highlights both functionality and potential security maintenance requirements. WordPress environments are common targets for plugin-related risk when they are not patched or securely configured.
+Web fingerprinting identified the target as a WordPress-based website and surfaced supporting technologies such as Bootstrap and jQuery. These findings are useful in understanding the digital footprint of the target, but should be interpreted as tool-detected indicators rather than absolute confirmation of exact production configuration.
 
 Key observations:
 
-- Platform identified: WordPress 7.1.4
-- Download manager identified: WordPress Download Manager 3.3.76
-- Front-end libraries: Bootstrap and jQuery
-- Site metadata indicates a modern educational/public-facing website
+- Platform detected: WordPress 7.1.4
+- Plugin or download manager detected: WordPress Download Manager 3.3.76
+- Front-end frameworks detected: Bootstrap, jQuery
+- Site metadata indicates a modern educational/public-facing site
 
 ![WhatWeb screenshot](./WhatWeb_Screenshot.png)
 
 Relevant output: [whatweb_output.txt](./whatweb_output.txt)
 
-### 5. WAF Fingerprinting
+### 5. WAF Detection
 
-The WAF detection results identified ModSecurity, indicating that the target is protected by an application-layer firewall. While this is a positive indicator of defensive posture, it is important to note that WAF presence does not guarantee complete security. It does, however, demonstrate that the environment is configured with an additional layer of traffic filtering and attack mitigation.
+The reconnaissance results indicated the presence of ModSecurity, which suggests that the target is protected by an application-layer firewall. While this is an encouraging sign, WAF detection alone does not guarantee complete security or perfect configuration. It does, however, indicate that the target has at least one layer of defensive filtering in place.
 
 Key observations:
 
-- WAF identified: ModSecurity (SpiderLabs)
-- Application layer protection is present
-- Obfuscation and filtering may reduce the impact of basic enumeration and attack attempts
+- WAF detected: ModSecurity (SpiderLabs)
+- Traffic filtering is likely in place at the application layer
+- Defensive controls appear to be present at the edge of the application stack
 
 ![WAF detection screenshot](./WAF_Screenshot.png)
 
 Relevant output: [waf_output.txt](./waf_output.txt)
 
-### 6. Network Scan and Reconnaissance Evidence
+### 6. Network Scanning and Zenmap Evidence
 
-The repository also includes Zenmap-related materials and screenshots showing the use of network scanning tools in the reconnaissance flow. These artifacts provide additional support for the project’s practical scope and demonstrate the structured nature of the investigation.
+The repository also includes Zenmap-related evidence and supporting documentation for network scanning activities. These artifacts provide additional context for the project and reinforce the practical nature of the assessment.
 
 ![Zenmap screenshot 1](./Zenmap%201%20(1).png)
 
@@ -148,31 +141,29 @@ Supporting document: [Nmap - Zenmap GUI.pdf](./Nmap%20-%20Zenmap%20GUI.pdf)
 
 ## Security Insights
 
-This project provides several important insights into professional cybersecurity practice:
+This project highlights several important lessons in cybersecurity and ethical reconnaissance:
 
-- Publicly accessible information can reveal a meaningful operational picture of a target.
-- DNS, WHOIS, and HTTP metadata create a strong foundation for threat intelligence and risk analysis.
-- Web technology fingerprinting is valuable for identifying platform exposure and software lifecycle risks.
-- WAF detection is an important signal of defensive capability but not proof of complete resilience.
-- CMS-based systems require ongoing updates, patch management, and configuration review.
+- Public information is often enough to build a meaningful operational picture of a target.
+- DNS, HTTP, and WHOIS data can reveal a large amount of intelligence without exploitation.
+- Website fingerprinting can help map the platform, frameworks, and deployment posture of a target.
+- Defensive controls such as WAFs are important indicators of an organization’s security maturity.
+- WordPress-based systems, when not patched or managed properly, can become a common attack surface.
 
-The overall posture suggests a public website that is reachable, uses standard web infrastructure, and is protected by a basic application security layer. The environment is not necessarily vulnerable based solely on the evidence observed, but it does present a security profile that merits ongoing vigilance, especially if the WordPress platform or plugins are not maintained.
+The overall posture suggests a publicly reachable website with basic security controls in place. While the evidence indicates good practices such as HTTPS enforcement and a WAF, it should be interpreted carefully. The project does not confirm a complete security assessment or guarantee absence of vulnerabilities. Instead, it demonstrates how reconnaissance supports risk awareness, digital exposure analysis, and evidence-based reporting.
 
-## Business and Strategic Relevance
+## Lessons Learned
 
-From a broader security standpoint, this project reinforces the importance of proactive digital defense. Organizations that expose public-facing infrastructure must manage not only the technical controls on their servers but also the visibility created by DNS, platform detection, and web technologies. Even passive reconnaissance can reveal critical information about a system’s environment, which can inform risk prioritization, awareness, and mitigations.
+This internship task reinforced several practical lessons:
 
-This type of assessment is particularly valuable because it emphasizes prevention and awareness rather than reaction after compromise. In cybersecurity leadership terms, the project demonstrates how public reconnaissance and defensive analysis contribute to:
+- Reconnaissance is most effective when it is structured, documented, and performed within a defined scope.
+- Public metadata can reveal much about an organization’s digital footprint even without direct exploitation.
+- Technology detection should be interpreted carefully; scan results are informative, not definitive.
+- Defensive controls matter, but they require proper configuration and regular maintenance to remain effective.
+- Professional reporting is just as important as the technical findings, because stakeholders need clear evidence and context to act on results.
 
-- stronger asset visibility;
-- better exposure awareness;
-- improved patching discipline;
-- more informed security planning;
-- reduced risk of preventable compromise.
+## Supportive Materials
 
-## Supporting Materials
-
-The repository includes all relevant work products for the internship task:
+The repository includes the following supporting files:
 
 - [README.md](./README.md)
 - [whois_output.txt](./whois_output.txt)
@@ -187,8 +178,8 @@ The repository includes all relevant work products for the internship task:
 
 ## Conclusion
 
-This project reflects a strong understanding of ethical computer security practices and the value of passive reconnaissance in real-world cybersecurity analysis. Through careful collection of WHOIS, DNS, network, and web fingerprinting evidence, the project demonstrates how an external target can be assessed responsibly and professionally.
+This project demonstrates a responsible and well-structured approach to passive reconnaissance in a cybersecurity context. Through the collection and analysis of WHOIS, DNS, web headers, technology fingerprints, and WAF indicators, the exercise shows how public data can be used to understand a target’s digital exposure and defendable posture.
 
-The target domain, `networkwalks.com`, presents as a live WordPress-based public website that enforces HTTPS and appears to be protected by ModSecurity. While these are not proof of exploitation or vulnerability, they are meaningful indicators of exposure and defensive posture. The repository therefore serves as both a practical internship deliverable and a useful demonstration of how structured reconnaissance supports digital security awareness and operational decision-making.
+The evidence indicates that `networkwalks.com` is a live public website with standard web infrastructure, HTTPS enforcement, and a likely application-layer security control. While this does not constitute a full vulnerability assessment, it successfully reflects the core principles of ethical cybersecurity assessment: evidence gathering, careful interpretation, and professional reporting.
 
-This work demonstrates professional documentation, technical proficiency, and a clear understanding of modern security assessment principles. It is a strong representation of a disciplined and evidence-backed cybersecurity internship exercise.
+This repository stands as a practical internship deliverable and a useful demonstration of how reconnaissance supports cybersecurity understanding, risk awareness, and defensive analysis.
