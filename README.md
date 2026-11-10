@@ -74,7 +74,7 @@ The repository also includes Zenmap screenshots and a short GUI reference docume
 
 ![Zenmap screenshot 1](./Zenmap%201%20(1).png)
 
-![Zenmap screenshot 2](./Zenmap%201%20(2).png)
+![Zenmap screenshot 2](./zenmap2.png)
 
 [Open the Nmap / Zenmap GUI PDF](./Nmap%20-%20Zenmap%20GUI.pdf)
 
