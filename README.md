@@ -1,106 +1,94 @@
-[kali_lab_files_week 2.zip](https://github.com/user-attachments/files/34630745/kali_lab_files_week.2.zip)
+# Week 2 Cybersecurity Internship
 
-# Week-2-Cybersecurity-Internship-Footprinting-Reconnaissance-Network-Scanning
-Week 2 Cybersecurity Internship Projects – Footprinting, Reconnaissance and Network Scanning.
+## Footprinting, Reconnaissance & Network Scanning
 
-# Footprinting and Reconnaissance Report
+A documented **passive reconnaissance exercise** using publicly available information. The repository includes the findings, command outputs, screenshots, and supporting materials from the assessment.
 
-## Target
-- Domain: `networkwalks.com`
-- Date of assessment: 2026-11-10
-- Scope: Passive footprinting and reconnaissance based on publicly available data
+> **Scope and authorization:** The report describes passive checks against `networkwalks.com`. Only assess systems you own or have explicit permission to assess. This repository does not include exploit activity.
 
-## Executive Summary
-The target domain `networkwalks.com` resolves to the public IP address `192.232.216.135` and is hosting a WordPress-based website. The site redirects from HTTP to HTTPS, uses Apache as its web server, and appears to be protected by a Web Application Firewall (WAF), specifically ModSecurity from SpiderLabs. The domain is registered with GoDaddy and has its registrant information privacy-protected. Based on the available evidence, the target appears to be a public-facing educational website or academy platform.
+## At a glance
 
-## 1. Domain Registration Details
-WHOIS data revealed the following:
-- Domain name: `networkwalks.com`
-- Registrar: GoDaddy.com, LLC
-- Creation date: 2019-11-06
-- Registration expiration date: 2027-11-06
-- Name servers:
-  - `NS6135.HOSTGATOR.COM`
-  - `NS6136.HOSTGATOR.COM`
-  - `NS29.DOMAINCONTROL.COM`
-  - `NS30.DOMAINCONTROL.COM`
-- Registrant details were masked through privacy protection (Domains By Proxy), which is common for public websites.
+| Item | Details |
+|---|---|
+| Target | `networkwalks.com` |
+| Assessment date | 2026-11-10 |
+| Scope | Passive footprinting and reconnaissance using public information |
+| Resolved IPv4 address | `192.232.216.135` |
+| Observed web platform | WordPress (as reported by WhatWeb) |
 
-### Observations
-- The domain is active and not expired.
-- The domain is managed through a major registrar and a standard hosting infrastructure.
-- The ownership information is intentionally hidden, which is a common operational practice for commercial domains.
+## Summary of observations
 
-## 2. DNS and Host Resolution
-The NSLOOKUP output showed:
-- Server: `8.8.8.8`
-- Resolved host: `networkwalks.com`
-- IP address: `192.232.216.135`
+- DNS lookup resolved the domain to a public IPv4 address.
+- HTTP traffic redirected to HTTPS; the HTTPS endpoint returned a successful response in the captured results.
+- The collected output identified Apache and WordPress, plus front-end and plugin-related technologies. Fingerprinting results are point-in-time observations and may not always be definitive.
+- The WAF detection output identified ModSecurity.
+- Public DNS, registration, and HTTP metadata provide useful context, but do not by themselves establish that a system is vulnerable.
 
-### Findings
-- The target resolves successfully in DNS.
-- The domain maps to a public IPv4 address, confirming it is live and reachable.
-- A single A record indicates a fairly straightforward network footprint, likely hosted on a conventional server or shared hosting environment.
+## Findings and evidence
 
-## 3. HTTP and Web Server Analysis
-The HTTP header data revealed the following:
-- HTTP request to `http://networkwalks.com` returned `301 Moved Permanently`
-- Redirect target: `https://networkwalks.com/`
-- HTTPS endpoint returned `200 OK`
-- Server banner: `Apache`
-- Content-Type: `text/html; charset=UTF-8`
-- Cookie observed: `__wpdm_client`
-- Other headers included `permissions-policy`, `referrer-policy`, `link`, and `x-nginx-cache`
+### Domain registration — WHOIS
 
-### Findings
-- The site enforces HTTPS redirection, which is a positive security practice.
-- The web server is Apache, which is commonly used in public hosting environments.
-- The presence of the `__wpdm_client` cookie suggests a plugin or download-related feature in use.
+The report records GoDaddy.com, LLC as the registrar and notes that registrant details are privacy-protected.
 
-## 4. Technology Stack Identification
-WhatWeb reported the following technologies:
-- Platform: WordPress 7.1.4
-- Download manager: WordPress Download Manager 3.3.76
-- Front-end technologies:
-  - Bootstrap 7.1.4
-  - jQuery 3.7.1
-- Site title: `Networkwalks Academy`
-- Country: United States (US)
-- Detected metadata: Open Graph, HTML5, Google Tag Manager
+![WHOIS reconnaissance screenshot](./WHOIS_Screenshot.png)
 
-### Interpretation
-- The site is built on WordPress, which makes it susceptible to plugin and CMS-related vulnerabilities if not maintained.
-- The use of Bootstrap and jQuery indicates a modern front-end interface.
-- The title “Networkwalks Academy” suggests the site is an educational or learning platform.
+[View the WHOIS output](./whois_output.txt)
 
-## 5. WAF Fingerprinting
-The WAF detection tool reported:
-- WAF identified: `ModSecurity (SpiderLabs)`
-- Result: The target is behind a ModSecurity WAF.
+### DNS and host resolution
 
-### Significance
-- This means the website is actively protected at the application layer.
-- Basic probing and attack attempts may be filtered or blocked.
-- WAF presence indicates the infrastructure is designed with some level of security hardening.
+The captured lookup resolved `networkwalks.com` to `192.232.216.135`.
 
-## 6. Security Posture Summary
-From the collected evidence, the target demonstrates several foundational security controls:
-- HTTPS enforcement
-- Apache web server in a public environment
-- WAF protection via ModSecurity
-- Modern front-end stack
+![NSLOOKUP screenshot](./NSLookup_Screenshot.png)
 
-However, the following risks should be considered:
-- WordPress and plugin versions may need ongoing patching.
-- Download manager plugins are often a common target if not updated.
-- Public-facing applications should regularly be checked for outdated components and weak configurations.
+[View the NSLOOKUP output](./nslookup_output.txt) · [View the DNSRecon output](./dnsrecon_output.txt)
 
-## 7. Final Assessment
-`networkwalks.com` is an active website that appears to be a WordPress-based educational portal. It is publicly reachable, uses Apache, redirects to HTTPS, and is protected by the ModSecurity WAF. While the site shows standard security practices, it should still be evaluated regularly for WordPress plugin security, server hardening, and vulnerability management.
+![DNSRecon screenshot](./DNSRecon_Screenshot.png)
 
-## 8. Conclusion
-This footprinting exercise successfully identified the target’s public exposure, technologies in use, DNS resolution, hosting setup, and security controls. These findings align with a typical reconnaissance workflow used during penetration testing and cybersecurity analysis.
+### HTTP headers and HTTPS behavior
 
----
+The collected headers show an HTTP-to-HTTPS redirect and include server and response metadata. Header values can change over time and should be treated as observations from the assessment date.
 
-This report was prepared from public reconnaissance data collected for the target `networkwalks.com` as part of the Week 2 cybersecurity internship task.
+![Curl headers screenshot](./Curl_Headers_Screenshot.png)
+
+[View the captured headers](./curl_headers.txt)
+
+### Web technology identification
+
+WhatWeb identified WordPress and other technologies in its scan output. Technology fingerprinting is indicative, not proof of exact versions or patch status.
+
+![WhatWeb screenshot](./WhatWeb_Screenshot.png)
+
+[View the WhatWeb output](./whatweb_output.txt)
+
+### WAF identification
+
+The captured WAF-detection result identified ModSecurity. A detection result does not establish how the WAF is configured or how effective it is.
+
+![WAF detection screenshot](./WAF_Screenshot.png)
+
+[View the WAF output](./waf_output.txt)
+
+### Network scanning materials
+
+The repository also includes Zenmap screenshots and a short GUI reference document.
+
+![Zenmap screenshot 1](./Zenmap%201%20(1).png)
+
+![Zenmap screenshot 2](./Zenmap%201%20(2).png)
+
+[Open the Nmap / Zenmap GUI PDF](./Nmap%20-%20Zenmap%20GUI.pdf)
+
+## Assessment notes
+
+The evidence suggests a publicly reachable website that redirects to HTTPS and has a WAF detection result. These are useful observations, but they are not a full security audit. The collected artifacts do not verify whether software is fully patched, whether security controls are correctly configured, or whether vulnerabilities are present.
+
+## Repository contents
+
+- **Screenshots:** WHOIS, DNS/NSLOOKUP, WhatWeb, WAF, HTTP headers, and Zenmap evidence (displayed above).
+- **Text outputs:** captured WHOIS, DNS, HTTP header, WAF, and WhatWeb results (linked in each section).
+- **Supporting documents:** [Nmap / Zenmap GUI PDF](./Nmap%20-%20Zenmap%20GUI.pdf) and [sample report DOCX](./W2-PM-FINAL%20-%20Sample%20Report%20v2.docx).
+- **Lab archive:** [kali_lab_files_week 2.zip](https://github.com/user-attachments/files/34630745/kali_lab_files_week.2.zip).
+
+## Conclusion
+
+This project demonstrates a basic, evidence-backed workflow for passive footprinting and reconnaissance. The screenshots are embedded here for easier viewing, while the raw outputs and supporting materials remain available through the links above.
